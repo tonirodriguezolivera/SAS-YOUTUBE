@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Recuperar{% endblock %}
+{% block content %}
+<div class="auth-shell">
+  <div class="card auth-card shadow">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <h2 class="h4 mb-3">Recuperación de contraseña</h2>
+      <p class="text-muted small mb-4">El envío por correo está pendiente de configurar (SMTP).</p>
+      <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="mb-4">{{ form.email.label(class="form-label fw-semibold") }}{{ form.email(class="form-control") }}</div>
+        {{ form.submit(class="btn btn-primary w-100 py-2") }}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

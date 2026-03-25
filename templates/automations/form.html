@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1 class="h3 mb-4">{{ title }}</h1>
+<div class="row">
+  <div class="col-xl-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <form method="post" class="row g-3">
+          {{ form.hidden_tag() }}
+          <div class="col-12">{{ form.name.label(class="form-label") }}{{ form.name(class="form-control") }}</div>
+          <div class="col-md-6">{{ form.youtube_channel_id.label(class="form-label") }}{{ form.youtube_channel_id(class="form-select") }}</div>
+          <div class="col-md-6">{{ form.llm_provider_id.label(class="form-label") }}{{ form.llm_provider_id(class="form-select") }}</div>
+          <div class="col-md-6">{{ form.video_provider_id.label(class="form-label") }}{{ form.video_provider_id(class="form-select") }}</div>
+          <div class="col-md-6">{{ form.voice_provider_id.label(class="form-label") }}{{ form.voice_provider_id(class="form-select") }}</div>
+          <div class="col-md-4">{{ form.videos_per_day.label(class="form-label") }}{{ form.videos_per_day(class="form-control") }}</div>
+          <div class="col-md-4">{{ form.duration_min_seconds.label(class="form-label") }}{{ form.duration_min_seconds(class="form-control") }}</div>
+          <div class="col-md-4">{{ form.duration_max_seconds.label(class="form-label") }}{{ form.duration_max_seconds(class="form-control") }}</div>
+          <div class="col-md-4">{{ form.language.label(class="form-label") }}{{ form.language(class="form-control") }}</div>
+          <div class="col-md-4">{{ form.tone.label(class="form-label") }}{{ form.tone(class="form-control") }}</div>
+          <div class="col-md-4">{{ form.cta_style.label(class="form-label") }}{{ form.cta_style(class="form-control") }}</div>
+          <div class="col-md-6">{{ form.content_format.label(class="form-label") }}{{ form.content_format(class="form-select") }}</div>
+          <div class="col-md-6">{{ form.publish_mode.label(class="form-label") }}{{ form.publish_mode(class="form-select") }}</div>
+          <div class="col-md-6">{{ form.status.label(class="form-label") }}{{ form.status(class="form-select") }}</div>
+          <div class="col-12">{{ form.master_prompt.label(class="form-label") }}{{ form.master_prompt(class="form-control", rows=10) }}</div>
+          <div class="col-12">{{ form.submit(class="btn btn-primary") }}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

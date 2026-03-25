@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Proveedores{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">Proveedores IA</h1>
+  <a class="btn btn-primary" href="{{ url_for('providers.create') }}">Anadir</a>
+</div>
+<div class="table-responsive card shadow-sm">
+  <table class="table mb-0">
+    <thead class="table-light"><tr><th>Etiqueta</th><th>Tipo</th><th>Validado</th><th></th></tr></thead>
+    <tbody>
+      {% for p in providers %}
+      <tr>
+        <td>{{ p.display_label }}</td>
+        <td><span class="badge bg-secondary">{{ p.kind }}</span></td>
+        <td>{% if p.is_validated %}<span class="text-success">Si</span>{% else %}<span class="text-warning">No</span>{% endif %}</td>
+        <td class="text-end">
+          <form method="post" action="{{ url_for('providers.delete', pid=p.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="text-muted p-4">Sin proveedores.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

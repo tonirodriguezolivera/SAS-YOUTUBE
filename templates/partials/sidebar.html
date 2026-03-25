@@ -1,0 +1,27 @@
+{% if current_user.is_authenticated %}
+{% set ep = request.endpoint or '' %}
+<aside class="sidebar text-white p-3 p-lg-4">
+  <div class="sidebar-brand">
+    <div class="name">YouTube Automator</div>
+    <div class="tag">Producción</div>
+  </div>
+  <div class="nav-section-label">Menu</div>
+  <ul class="nav flex-column gap-1">
+    <li class="nav-item">
+      <a class="nav-link {% if ep == 'dashboard.index' %}active{% endif %}" href="{{ url_for('dashboard.index') }}">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if ep.startswith('youtube.') %}active{% endif %}" href="{{ url_for('youtube.channels') }}">YouTube</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if ep.startswith('providers.') %}active{% endif %}" href="{{ url_for('providers.list_providers') }}">Proveedores IA</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if ep.startswith('automations.') %}active{% endif %}" href="{{ url_for('automations.list_profiles') }}">Automatizaciones</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if ep.startswith('users.') %}active{% endif %}" href="{{ url_for('users.profile') }}">Perfil</a>
+    </li>
+  </ul>
+</aside>
+{% endif %}

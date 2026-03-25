@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1 class="h3 mb-4">Resumen ejecutivo</h1>
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-xl-3">
+    <div class="card kpi-card border-0 h-100">
+      <div class="card-body">
+        <div class="text-muted small fw-semibold text-uppercase" style="font-size:0.7rem;letter-spacing:0.06em;">Canales YouTube</div>
+        <div class="display-6 mt-1">{{ kpis.channels }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card kpi-card border-0 h-100">
+      <div class="card-body">
+        <div class="text-muted small fw-semibold text-uppercase" style="font-size:0.7rem;letter-spacing:0.06em;">Automatizaciones activas</div>
+        <div class="display-6 mt-1">{{ kpis.automations_active }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card kpi-card border-0 h-100">
+      <div class="card-body">
+        <div class="text-muted small fw-semibold text-uppercase" style="font-size:0.7rem;letter-spacing:0.06em;">Títulos en sistema</div>
+        <div class="display-6 mt-1">{{ kpis.titles }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card kpi-card border-0 h-100">
+      <div class="card-body">
+        <div class="text-muted small fw-semibold text-uppercase" style="font-size:0.7rem;letter-spacing:0.06em;">Vídeos publicados</div>
+        <div class="display-6 mt-1">{{ kpis.published }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-xl-7">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-white fw-semibold">Flujo de produccion reciente</div>
+      <div class="table-responsive">
+        <table class="table table-sm mb-0">
+          <thead><tr><th>Perfil</th><th>Etapa</th><th>Actualizado</th></tr></thead>
+          <tbody>
+            {% for r in pipeline_runs %}
+            <tr>
+              <td><a href="{{ url_for('dashboard.pipeline_detail', run_id=r.id) }}">{{ r.display_name or ('Run #' ~ r.id) }}</a></td>
+              <td><span class="badge bg-info text-dark">{{ r.current_stage }}</span></td>
+              <td class="small text-muted">{{ r.updated_at }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3" class="text-muted p-3">Ejecuta flask jobs seed-content y flask jobs process-pipeline para ver datos.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-5">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-white fw-semibold">Auditoria reciente</div>
+      <ul class="list-group list-group-flush small">
+        {% for log in recent_logs %}
+        <li class="list-group-item d-flex justify-content-between">
+          <span>{{ log.action }}</span>
+          <span class="text-muted">{{ log.created_at }}</span>
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted">Sin eventos aun.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

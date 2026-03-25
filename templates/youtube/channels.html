@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Canales YouTube{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">Canales conectados</h1>
+  <a class="btn btn-primary" href="{{ url_for('youtube.oauth_start') }}">Conectar con Google</a>
+</div>
+<div class="table-responsive card shadow-sm">
+  <table class="table table-hover mb-0">
+    <thead class="table-light"><tr><th>Canal</th><th>ID</th><th>Estado</th><th>Última sync</th></tr></thead>
+    <tbody>
+      {% for c in channels %}
+      <tr>
+        <td>
+          {% if c.thumbnail_url %}<img src="{{ c.thumbnail_url }}" alt="" width="36" height="36" class="rounded me-2">{% endif %}
+          {{ c.title }}
+        </td>
+        <td><code>{{ c.google_channel_id }}</code></td>
+        <td><span class="badge bg-{{ 'success' if c.status == 'connected' else 'warning' }}">{{ c.status }}</span></td>
+        <td>{{ c.last_synced_at or '-' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="text-muted p-4">No hay canales. Conecta tu cuenta de YouTube.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

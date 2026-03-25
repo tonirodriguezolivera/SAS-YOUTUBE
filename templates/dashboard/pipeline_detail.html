@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Pipeline #{{ run.id }}{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url_for('dashboard.index') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Run #{{ run.id }}</li>
+  </ol>
+</nav>
+<h1 class="h3 mb-2">{{ run.display_name or ('Pipeline #' ~ run.id) }}</h1>
+<p class="text-muted small mb-4">Perfil: {{ run.automation.name }} · Etapa actual: <strong>{{ run.current_stage }}</strong></p>
+
+{% set order = ['idea','title','script','production_plan','assets','render','qa','published'] %}
+<div class="pipeline-flow d-flex flex-wrap gap-2 mb-4">
+  {% for key in order %}
+    {% set st = run.stages_json.get(key, {}) %}
+    {% set status = st.get('status', 'pending') %}
+    <div class="border rounded px-3 py-2 bg-white shadow-sm small">
+      <div class="text-uppercase text-muted" style="font-size:0.7rem;">{{ key }}</div>
+      <span class="badge bg-{{ 'success' if status == 'done' else 'warning' if status == 'running' else 'secondary' }}">{{ status }}</span>
+    </div>
+    {% if not loop.last %}<span class="align-self-center text-muted">→</span>{% endif %}
+  {% endfor %}
+</div>
+
+{% if run.last_error %}
+<div class="alert alert-danger">Error: {{ run.last_error }}</div>
+{% endif %}
+
+<div class="card shadow-sm">
+  <div class="card-header bg-white fw-semibold">Detalle por etapa</div>
+  <div class="list-group list-group-flush">
+    {% for key in order %}
+    {% set st = run.stages_json.get(key, {}) %}
+    <div class="list-group-item">
+      <div class="d-flex justify-content-between">
+        <strong>{{ key }}</strong>
+        <span class="badge bg-light text-dark">{{ st.get('status','pending') }}</span>
+      </div>
+      {% if st.get('at') %}<div class="small text-muted">Marca temporal: {{ st.get('at') }}</div>{% endif %}
+      {% if st.get('log') %}
+      <ul class="small mb-0 mt-2">
+        {% for line in st.get('log', []) %}<li>{{ line }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

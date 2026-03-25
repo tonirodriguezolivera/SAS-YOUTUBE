@@ -1,0 +1,29 @@
+# Web
+Flask>=3.0.0,<4
+Flask-Login>=0.6.3
+Flask-SQLAlchemy>=3.1.1
+Flask-Migrate>=4.0.7
+Flask-WTF>=1.2.1
+Flask-Limiter>=3.8.0
+WTForms>=3.1.2
+email-validator>=2.1.0
+
+# Config & security
+python-dotenv>=1.0.1
+cryptography>=42.0.0
+bcrypt>=4.1.2
+
+# Google / YouTube
+google-auth>=2.27.0
+google-auth-oauthlib>=1.2.0
+google-api-python-client>=2.118.0
+
+# HTTP (proveedores IA)
+httpx>=0.27.0
+
+# Logs estructurados
+structlog>=24.1.0
+
+# Tests
+pytest>=8.0.0
+pytest-flask>=1.3.0

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Automatizaciones{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">Perfiles de automatizacion</h1>
+  <a class="btn btn-primary" href="{{ url_for('automations.create') }}">Nuevo perfil</a>
+</div>
+<div class="table-responsive card shadow-sm">
+  <table class="table mb-0 align-middle">
+    <thead class="table-light">
+      <tr><th>Nombre</th><th>Estado</th><th>Videos/dia</th><th>Formato</th><th class="text-end">Acciones</th></tr>
+    </thead>
+    <tbody>
+      {% for p in profiles %}
+      <tr>
+        <td><strong>{{ p.name }}</strong></td>
+        <td><span class="badge bg-{{ 'success' if p.status == 'active' else 'secondary' }}">{{ p.status }}</span></td>
+        <td>{{ p.videos_per_day }}</td>
+        <td>{{ p.content_format }}</td>
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-primary" href="{{ url_for('automations.edit', pid=p.id) }}">Editar</a>
+          <form class="d-inline" method="post" action="{{ url_for('automations.toggle', pid=p.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-sm btn-outline-warning" type="submit">Pausar/Reanudar</button>
+          </form>
+          <form class="d-inline" method="post" action="{{ url_for('automations.delete', pid=p.id) }}" onsubmit="return confirm('Eliminar perfil?');">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="text-muted p-4">Crea tu primer perfil de automatizacion.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

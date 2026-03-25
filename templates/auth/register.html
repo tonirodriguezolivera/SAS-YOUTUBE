@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Registro{% endblock %}
+{% block content %}
+<div class="auth-shell">
+  <div class="card auth-card shadow" style="max-width: 480px;">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <h2 class="h4 mb-4">Crear cuenta</h2>
+      <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">{{ form.email.label(class="form-label fw-semibold") }}{{ form.email(class="form-control") }}</div>
+        <div class="mb-3">{{ form.display_name.label(class="form-label fw-semibold") }}{{ form.display_name(class="form-control") }}</div>
+        <div class="mb-3">{{ form.password.label(class="form-label fw-semibold") }}{{ form.password(class="form-control") }}</div>
+        <div class="mb-4">{{ form.password2.label(class="form-label fw-semibold") }}{{ form.password2(class="form-control") }}</div>
+        {{ form.submit(class="btn btn-primary w-100 py-2") }}
+      </form>
+      <p class="mt-4 mb-0 small text-center"><a href="{{ url_for('auth.login') }}" class="text-decoration-none">Ya tengo cuenta</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

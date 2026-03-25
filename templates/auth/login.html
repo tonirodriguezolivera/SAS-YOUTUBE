@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Entrar{% endblock %}
+{% block content %}
+<div class="auth-shell">
+  <div class="card auth-card shadow">
+    <div class="card-accent"></div>
+    <div class="card-body">
+      <h2 class="h4 mb-4">Iniciar sesión</h2>
+      <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.email.label(class="form-label fw-semibold") }}
+          {{ form.email(class="form-control") }}
+        </div>
+        <div class="mb-4">
+          {{ form.password.label(class="form-label fw-semibold") }}
+          {{ form.password(class="form-control") }}
+        </div>
+        {{ form.submit(class="btn btn-primary w-100 py-2") }}
+      </form>
+      <p class="mt-4 mb-0 small text-center text-muted">
+        <a href="{{ url_for('auth.register') }}" class="text-decoration-none">Crear cuenta</a>
+        <span class="mx-2">·</span>
+        <a href="{{ url_for('auth.reset_password_request') }}" class="text-decoration-none">Recuperar contraseña</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
